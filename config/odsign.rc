@@ -1,0 +1,10 @@
+# A50 port: Samsung's TEE refuses odsign's signing key (SECURE_HW_ACCESS_DENIED),
+# so skip signing: compile with odrefresh when needed, then report success.
+service odsign /system/bin/sh -c "setprop odsign.key.done 1; /apex/com.android.art/bin/odrefresh --compile > /data/misc/odsign/odrefresh_port.log 2>&1; echo rc=$$? >> /data/misc/odsign/odrefresh_port.log; setprop odsign.verification.success 1; setprop odsign.verification.done 1"
+    class core
+    user root
+    group system
+    disabled
+    oneshot
+    seclabel u:r:shell:s0
+    capabilities SYS_NICE

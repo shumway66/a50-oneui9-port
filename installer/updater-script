@@ -52,6 +52,36 @@ ui_print "    * First boot can take 5-10 minutes"
 ui_print "    * Root: patch boot with APatch after boot"
 ui_print "==============================================="
 ui_print " "
+#----- Ultimate Rom install options (volume keys) -----#
+ur_key() {
+    if ! command -v getevent >/dev/null 2>&1; then return 0; fi
+    while true; do
+        ev=$(getevent -lqc 1 2>/dev/null)
+        case "$ev" in
+            *KEY_VOLUMEUP*DOWN*) return 0 ;;
+            *KEY_VOLUMEDOWN*DOWN*) return 1 ;;
+        esac
+    done
+}
+ur_ask() {
+    ui_print " "
+    ui_print "  $1"
+    ui_print "     Vol+ = YES     Vol- = NO"
+    if ur_key; then ui_print "     -> Yes"; echo "$2=1" >> /tmp/ur_choices; else ui_print "     -> No"; echo "$2=0" >> /tmp/ur_choices; fi
+}
+rm -f /tmp/ur_choices
+ui_print "==============================================="
+ui_print "  INSTALL OPTIONS  (answer with volume keys)"
+ui_print "==============================================="
+ur_ask "Google apps? (Gmail, Maps, YouTube, Photos)" google
+ur_ask "Bixby + Modes & Routines?" bixby
+ur_ask "Samsung Weather?" weather
+ur_ask "Samsung English voices (text-to-speech)?" voice
+ur_ask "Open Camera?" opencam
+ur_ask "Shelter (clone any app)?" shelter
+ur_ask "APatch (root manager)?" apatch
+ui_print " "
+#-------------------------------------------------------#
 ui_print "[1/5] Preparing partitions"
 ui_print "      Unmounting system/vendor/product if needed"
 if is_mounted /system_root; then unmount /system_root; fi
@@ -90,10 +120,18 @@ flash_part "up_param" "up_param.bin" "$UP_PARAM_BLOCK"
 show_progress 0.970000 0
 ui_print " "
 ui_print "[5/5] Cleaning caches and temporary files"
+
 package_extract_file cleanup.sh /tmp/cleanup.sh
 set_perm 0 0 0755 /tmp/cleanup.sh
 run_program "/tmp/cleanup.sh"
 rm -rf /data/system/package_cache /data/apex/decompressed /cache/bootlog.txt 2>/dev/null
+#----- save install options for first boot -----#
+is_mounted /cache || mount /cache 2>/dev/null
+mkdir -p /cache && cp -f /tmp/ur_choices /cache/ur_choices && chmod 0644 /cache/ur_choices
+mount /data 2>/dev/null; cp -f /tmp/ur_choices /data/ur_choices; chmod 644 /data/ur_choices
+rm -f /data/local/tmp/.ur_setup_done 2>/dev/null
+ui_print "   - Install options saved"
+#------------------------------------------------#
 ui_print " "
 ui_print "==============================================="
 ui_print "  Installation complete"

@@ -1,7 +1,7 @@
 on property:sys.boot_completed=1
     start setupdone
 
-service setupdone /system/bin/sh -c "settings put global device_provisioned 1; settings put secure user_setup_complete 1; settings put global hidden_api_policy 1; if [ ! -f /data/local/tmp/.preinst_done ]; then for a in /system/etc/preinst/*.apk; do pm install -r $$a; done; touch /data/local/tmp/.preinst_done; fi"
+service setupdone /system/bin/sh /system/etc/ur_firstboot.sh
     user root
     group root system
     seclabel u:r:shell:s0

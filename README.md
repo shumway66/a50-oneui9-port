@@ -115,3 +115,9 @@ New files need fs_config + file_contexts entries (`tools/addcfg.py <subdir>`); b
 - Don't flash an old ROM's product partition under a new system: its A16 flags/props broke zygote (`SystemServiceRegistry` NoClassDefFoundError).
 - Changing `ro.vendor.build.fingerprint` triggers an "upgrade" boot path — caused watchdog/boot hangs; leave it. The "internal problem" dialog is harmless.
 - Keep a known-good image set before every experiment.
+
+## Changelog
+- v1.3: install options menu (volume keys), swipe gestures fixed, Samsung Clock added
+- v1.2: Smart View, fingerprint, Play Services/WebView fix, odsign/ART fix, f2fs + ext4 data, Messages/Galaxy Store/Wallpapers, Shelter
+- v1.1: GmsCore fix
+See PATCHES.md for details.
