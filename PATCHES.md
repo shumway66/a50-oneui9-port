@@ -28,3 +28,24 @@
 ## Install options (installer/options)
 - Volume-key menu in updater-script, choices saved to /cache and /data (after cleanup.sh, which wipes /cache)
 - ur_firstboot.sh applies them on first boot (pm uninstall --user 0 / pm install)
+
+## Samsung Camera (v1.4) - camera/
+- App: SamsungCamera from the A50 M12 port (One UI 5.1), cameradata from the same ROM
+- campatch.py patches the app:
+  - ro.build.version.oneui 90000 unknown -> fall back to newest known version (m3/i)
+  - semSetDisablePreviewScreenshots removed in One UI 9 -> nop
+  - getCurrentUser needs platform-only permission -> returns 0
+  - APK re-signed with a ROM key (v2 signature required); key kept private
+- floating_feature: S26 FE camera keys replaced with the M12 port's (CAMID_WIDE=0, CAMID_UW=50)
+- camlibs.sh: copies the M12 camera / arcsoft / polarr libs + public.libraries entries
+- camshim.S: libcamshim.camera.samsung.so maps the old
+  CameraUtils::getRotationTransform(meta,int,int*) to the A17 (meta,int,bool,int*) version;
+  added as NEEDED to libcore2nativeutil.camera.samsung.so with patchelf
+- apicheck.py: lists framework calls an app makes that the ROM's framework lacks
+
+## Gallery (v1.4)
+- libphotohdr.so uses ARMv8.2 instructions (SIGILL on Exynos 9610)
+- floating_feature: MMFW_SUPPORT_PHOTOHDR and COMMON_SUPPORT_HDR_EFFECT = FALSE
+
+## Dual speaker (v1.4)
+- vendor/etc/mixer_paths.xml: <path name="dev-handset" /> added to media-speaker
