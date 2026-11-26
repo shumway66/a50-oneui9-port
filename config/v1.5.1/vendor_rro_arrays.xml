@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="config_tether_usb_regexs">
+        <item>rndis0</item>
+    </string-array>
+    <integer-array name="config_aodBrightnessValues">
+        <item>0</item>
+        <item>40</item>
+        <item>71</item>
+        <item>94</item>
+    </integer-array>
+</resources>
