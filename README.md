@@ -89,7 +89,7 @@ and the 4.14 **Ultimate Kernel A50**.
 
 ## Vendor changes
 - audio HAL, camera provider, OMX rc files re-enabled; audio HAL entries restored in vintf manifest
-- 41 camera files from Fresh ROM A50 stock vendor (fixes empty JPEG / Exif 0x0 thumb)
+- Camera HAL, firmware and sensor setfiles from Fresh ROM A50's vendor (credit: Fresh ROM A50) (fixes empty JPEG / Exif 0x0 thumb)
 
 ## Smart View — where it stops
 1. Nearby Service missing → restore AllshareMediaShare ✔
