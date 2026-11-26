@@ -16,7 +16,7 @@ and the 4.14 **Ultimate Kernel A50**.
 | Bluetooth (on / scan / pair) | `libbluetooth_jni.so` VaultKeeper loop skipped |
 | Audio | 32-bit support restored for the A50 32-bit audio HAL |
 | Calls / SIM, SD card, USB OTG | sdfat `time_offset` mount option accepted in kernel |
-| Camera (Open Camera) | Fresh ROM A50 camera stack in vendor |
+| Camera | Samsung Camera app: own A50 M12 port (see camera/). Vendor camera HAL/firmware: from the credited vendor (same files as Fresh ROM A50) |
 | GPU | SkiaGL, Mali-G72 GLES 3.2 |
 | Root | APatch |
 | Chrome, Play Store (+ self-update), Play Services | GMS in /system, **product partition empty** |
@@ -24,7 +24,6 @@ and the 4.14 **Ultimate Kernel A50**.
 | Not working / untested | |
 |---|---|
 | Smart View | connects to TV, but black screen: 64-bit WFD vs 32-bit A50 OMX encoder (see below) |
-| Samsung Camera | camera ID mismatch — use Open Camera |
 | Mobile data | untested |
 
 ## Partition layout
@@ -80,7 +79,7 @@ and the 4.14 **Ultimate Kernel A50**.
   (Samsung `ACodec::reconfigEncoder4OtherApps` freads 512 bytes into a 255-byte buffer → FORTIFY abort in remotedisplay)
 
 **Apps**
-- Removed: SecSetupWizard, SetupWizard, SamsungDeviceHealthManagerService, SamsungCamera
+- Removed: SecSetupWizard, SetupWizard, SamsungDeviceHealthManagerService
 - Restored (debloat went too far → "Device locked" screen): telephony/Knox apps incl. CIDManager,
   CarrierDefaultApp, SimAppDialog, KnoxCore …
 - Restored `app/AllshareMediaShare` (Nearby Service — needed by Smart View)
