@@ -16,7 +16,7 @@ and the 4.14 **Ultimate Kernel A50**.
 | Bluetooth (on / scan / pair) | `libbluetooth_jni.so` VaultKeeper loop skipped |
 | Audio | 32-bit support restored for the A50 32-bit audio HAL |
 | Calls / SIM, SD card, USB OTG | sdfat `time_offset` mount option accepted in kernel |
-| Camera | Samsung Camera app: own A50 M12 port (see camera/). Vendor camera HAL/firmware: from the credited vendor (same files as Fresh ROM A50) |
+| Camera | Samsung Camera app: own A50 M12 port (see camera/). Vendor camera stack: stock Samsung firmware only (A50 HAL/core/sensor files + A51 Android 13 framework), hash-verified |
 | GPU | SkiaGL, Mali-G72 GLES 3.2 |
 | Root | APatch |
 | Chrome, Play Store (+ self-update), Play Services | GMS in /system, **product partition empty** |
@@ -89,7 +89,7 @@ and the 4.14 **Ultimate Kernel A50**.
 
 ## Vendor changes
 - audio HAL, camera provider, OMX rc files re-enabled; audio HAL entries restored in vintf manifest
-- Camera HAL, firmware and sensor setfiles from Fresh ROM A50's vendor (credit: Fresh ROM A50) (fixes empty JPEG / Exif 0x0 thumb)
+- Camera stack rebuilt from stock Samsung firmware: A50 (A505G) HAL, libexynoscamera3, libFacePreProcessing, sensor setfiles + fimc firmware; A51 (A515FXXU8HWI1) Android 13 camera framework, provider and unihal apex (fixes empty JPEG / Exif 0x0 thumb)
 
 ## Smart View — where it stops
 1. Nearby Service missing → restore AllshareMediaShare ✔

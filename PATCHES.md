@@ -93,3 +93,11 @@
 
 ### Known limits
 - Galaxy AI / Samsung Language Core: needs libenn_user_lib.so (Exynos NPU); A50 has no NPU.
+
+## Vendor camera stack: stock-sourced (after v1.5.3)
+- Before: 49 vendor camera files were byte-identical to Fresh ROM A50's vendor (credited).
+- Rebuilt only from stock Samsung firmware:
+  - A50 SM-A505G (stock): camera HAL (camera.exynos9610.so, used under the 9611 name), libexynoscamera3.so (A51's aborts in createExynosCameraSensorInfo: no A50 sensors), libFacePreProcessing, setfile_2x5/imx576/4ha/gc5035, fimc_is_lib/rta firmware
+  - A51 SM-A515F A515FXXU8HWI1 (Android 13, stock): camera provider 4.0 service + libs, camera.device impls, AOSP camera interfaces, unihal apex
+- Check: every vendor camera file still identical to Fresh's is also identical to a stock Samsung file (16/16, md5).
+- Tested: photo, front, 0.5x, video.
